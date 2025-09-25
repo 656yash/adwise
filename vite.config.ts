@@ -53,9 +53,28 @@
       target: 'esnext',
       outDir: 'dist',
       assetsDir: 'assets',
+      chunkSizeWarningLimit: 1000, // Increase chunk size warning limit to 1000kb
       rollupOptions: {
         output: {
-          manualChunks: undefined
+          manualChunks: {
+            // Split vendor libraries into separate chunks for better caching
+            'react-vendor': ['react', 'react-dom'],
+            'radix-vendor': [
+              '@radix-ui/react-accordion',
+              '@radix-ui/react-alert-dialog',
+              '@radix-ui/react-avatar',
+              '@radix-ui/react-checkbox',
+              '@radix-ui/react-dialog',
+              '@radix-ui/react-dropdown-menu',
+              '@radix-ui/react-label',
+              '@radix-ui/react-popover',
+              '@radix-ui/react-select',
+              '@radix-ui/react-tabs',
+              '@radix-ui/react-tooltip'
+            ],
+            'chart-vendor': ['recharts'],
+            'ui-vendor': ['lucide-react', 'clsx', 'class-variance-authority', 'tailwind-merge']
+          }
         }
       }
     },
