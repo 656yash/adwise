@@ -60,6 +60,16 @@ export default function App() {
     { id: 'chatbot', label: 'AI Analysis', icon: MessageSquare },
   ];
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-background dark">
+        <div className="text-center">
+          <p className="text-lg text-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-screen bg-background dark">
       {error ? (
@@ -70,16 +80,16 @@ export default function App() {
         </div>
       ) : (
         <>
-          {/* Top Navigation */}
           <TopNavigation
             items={navigationItems}
             activeTab={activeTab}
             onTabChange={handleTabChange}
           />
-
           <main className="flex-1 overflow-auto p-4 lg:p-6 cyberpunk-bg">
             {renderActiveComponent()}
           </main>
         </>
       )}
     </div>
+  );
+}
