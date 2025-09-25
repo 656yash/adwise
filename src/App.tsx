@@ -1,0 +1,63 @@
+import React, { useState, useEffect } from 'react';
+import { TopNavigation } from './components/TopNavigation';
+import { Dashboard } from './components/Dashboard';
+import { KPIVisualization } from './components/KPIVisualization';
+import { DataDetails } from './components/DataDetails';
+import { Chatbot } from './components/Chatbot';
+import { BarChart3, PieChart, Database, MessageSquare } from 'lucide-react';
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time for the Red Bull loader
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 4000); // 4 seconds loading time
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+  };
+
+  const renderActiveComponent = () => {
+    switch (activeTab) {
+      case 'dashboard':
+        return <Dashboard />;
+      case 'kpi':
+        return <KPIVisualization />;
+      case 'data':
+        return <DataDetails />;
+      case 'chatbot':
+        return <Chatbot />;
+      default:
+        return <Dashboard />;
+    }
+  };
+
+  const navigationItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
+    { id: 'kpi', label: 'KPI Visualization', icon: PieChart },
+    { id: 'data', label: 'Detailed Data', icon: Database },
+    { id: 'chatbot', label: 'AI Analysis', icon: MessageSquare },
+  ];
+
+  return (
+    <div className="flex flex-col h-screen bg-background dark">
+      {/* Top Navigation */}
+      <TopNavigation
+        items={navigationItems}
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+      />
+
+      {/* Main Content */}
+      <main className="flex-1 overflow-auto p-4 lg:p-6 cyberpunk-bg">
+        {renderActiveComponent()}
+      </main>
+    </div>
+  );
+}
