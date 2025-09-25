@@ -77,10 +77,9 @@ export default function App() {
             onTabChange={handleTabChange}
           />
 
-      {/* Main Content */}
-      <main className="flex-1 overflow-auto p-4 lg:p-6 cyberpunk-bg">
-        {renderActiveComponent()}
-      </main>
+          <main className="flex-1 overflow-auto p-4 lg:p-6 cyberpunk-bg">
+            {renderActiveComponent()}
+          </main>
+        </>
+      )}
     </div>
-  );
-}
