@@ -5,13 +5,16 @@ import { KPIVisualization } from './components/KPIVisualization';
 import { DataDetails } from './components/DataDetails';
 import { Chatbot } from './components/Chatbot';
 import { BarChart3, PieChart, Database, MessageSquare } from 'lucide-react';
-
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Apply dark theme to document
+    document.documentElement.classList.add('dark');
+    document.body.classList.add('dark');
+
     // Check for required environment variables
     const checkEnvironment = () => {
       try {
@@ -29,7 +32,7 @@ export default function App() {
     // Simulate loading time for the Red Bull loader
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 4000); // 4 seconds loading time
+    }, 2000); // Reduced to 2 seconds
 
     return () => clearTimeout(timer);
   }, []);
@@ -62,16 +65,17 @@ export default function App() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-background dark">
+      <div className="flex items-center justify-center h-screen bg-background dark" style={{backgroundColor: 'var(--background)', color: 'var(--foreground)'}}>
         <div className="text-center">
-          <p className="text-lg text-foreground">Loading...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#00f3ff] mb-4 mx-auto"></div>
+          <p className="text-lg" style={{color: '#00f3ff'}}>Loading Dashboard...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col h-screen bg-background dark">
+    <div className="flex flex-col h-screen bg-background dark" style={{backgroundColor: '#000000', color: '#ffffff', minHeight: '100vh'}}>
       {error ? (
         <div className="flex items-center justify-center h-screen">
           <div className="text-red-500 text-center p-4">
