@@ -16,7 +16,8 @@ export function Dashboard() {
   useEffect(() => {
     const testAPI = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/health');
+        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+        const response = await fetch(`${API_BASE_URL}/health`);
         const data = await response.json();
         console.log('API Health Check:', data);
       } catch (error) {
