@@ -9,8 +9,23 @@ import { BarChart3, PieChart, Database, MessageSquare } from 'lucide-react';
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Check for required environment variables
+    const checkEnvironment = () => {
+      try {
+        if (!import.meta.env.VITE_OPENAI_API_KEY && !localStorage.getItem('openai_api_key')) {
+          console.warn('OpenAI API key not configured');
+        }
+      } catch (err) {
+        console.error('Environment check failed:', err);
+        setError('Application configuration error. Please check the console for details.');
+      }
+    };
+
+    checkEnvironment();
+
     // Simulate loading time for the Red Bull loader
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -47,12 +62,20 @@ export default function App() {
 
   return (
     <div className="flex flex-col h-screen bg-background dark">
-      {/* Top Navigation */}
-      <TopNavigation
-        items={navigationItems}
-        activeTab={activeTab}
-        onTabChange={handleTabChange}
-      />
+      {error ? (
+        <div className="flex items-center justify-center h-screen">
+          <div className="text-red-500 text-center p-4">
+            {error}
+          </div>
+        </div>
+      ) : (
+        <>
+          {/* Top Navigation */}
+          <TopNavigation
+            items={navigationItems}
+            activeTab={activeTab}
+            onTabChange={handleTabChange}
+          />
 
       {/* Main Content */}
       <main className="flex-1 overflow-auto p-4 lg:p-6 cyberpunk-bg">

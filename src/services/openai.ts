@@ -1,4 +1,16 @@
 // OpenAI API service for chatbot
+
+interface ImportMetaEnv {
+  VITE_OPENAI_API_KEY?: string;
+}
+
+// Extend the global ImportMeta type so TypeScript recognizes import.meta.env
+declare global {
+  interface ImportMeta {
+    readonly env: ImportMetaEnv;
+  }
+}
+
 interface OpenAIMessage {
   role: 'system' | 'user' | 'assistant';
   content: string;
@@ -13,13 +25,23 @@ interface OpenAIResponse {
 }
 
 class OpenAIService {
-  private apiKey: string | null = import.meta.env.VITE_OPENAI_API_KEY || null;
+  private apiKey: string | null = null;
   private baseURL = 'https://api.openai.com/v1';
 
   constructor() {
-    // Auto-set the API key
-    if (this.apiKey) {
-      localStorage.setItem('openai_api_key', this.apiKey);
+    // Try to get API key from environment or localStorage
+    const envApiKey = import.meta.env.VITE_OPENAI_API_KEY;
+    const storedApiKey = localStorage.getItem('openai_api_key');
+    
+    if (envApiKey) {
+      this.apiKey = envApiKey;
+      localStorage.setItem('openai_api_key', envApiKey);
+    } else if (storedApiKey) {
+      this.apiKey = storedApiKey;
+    }
+
+    if (!this.apiKey) {
+      console.warn('OpenAI API key not found in environment variables or localStorage');
     }
   }
 
