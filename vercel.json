@@ -5,7 +5,7 @@
   "devCommand": "npm run dev",
   "functions": {
     "api/app.py": {
-      "runtime": "@vercel/python"
+      "runtime": "python"
     }
   },
   "routes": [
