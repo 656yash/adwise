@@ -382,5 +382,7 @@ if __name__ == '__main__':
     print("  - GET /api/data/detailed")
     print("  - GET /api/filters/options")
     print("  - GET /api/analytics/trends")
-    
+
+# Only run locally, not in serverless environment
+if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
