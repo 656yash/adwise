@@ -4,14 +4,14 @@
   "installCommand": "npm install && pip install -r backend/requirements.txt",
   "devCommand": "npm run dev",
   "functions": {
-    "backend/app.py": {
+    "api/app.py": {
       "runtime": "now-python@1.0.0"
     }
   },
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/backend/app.py"
+      "dest": "/api/app.py"
     },
     {
       "src": "/assets/(.*)",
