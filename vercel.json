@@ -5,7 +5,7 @@
   "devCommand": "npm run dev",
   "functions": {
     "api/app.py": {
-      "runtime": "python"
+      "runtime": "now-python@1.0.0"
     }
   },
   "routes": [
